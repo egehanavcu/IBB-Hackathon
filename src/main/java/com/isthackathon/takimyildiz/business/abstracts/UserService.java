@@ -23,4 +23,5 @@ public interface UserService extends UserDetailsService {
     Result assignIstanbulCardToUser(String istanbulCardId);
 
 
+    DataResult<User> getUserByCardId(String cardId);
 }
