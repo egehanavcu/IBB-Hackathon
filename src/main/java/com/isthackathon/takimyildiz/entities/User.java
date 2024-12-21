@@ -2,10 +2,7 @@ package com.isthackathon.takimyildiz.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
@@ -37,20 +34,10 @@ public class User implements UserDetails {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 
-    public String getPassword(){
-        return password;
-    }
-
-    public Set<Role> getAuthorities() {
-        return authorities;
-    }
-
-    public String getUsername(){
-        return id.toString();
-    }
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
@@ -88,4 +75,8 @@ public class User implements UserDetails {
     private List<ParentSchedule> childSchedules;
 
 
+    @Override
+    public String getUsername() {
+        return id.toString();
+    }
 }
