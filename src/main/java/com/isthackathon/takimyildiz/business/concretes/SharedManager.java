@@ -8,6 +8,7 @@ import com.isthackathon.takimyildiz.dataAccess.SharedDao;
 import com.isthackathon.takimyildiz.entities.Role;
 import com.isthackathon.takimyildiz.entities.ShareType;
 import com.isthackathon.takimyildiz.entities.Shared;
+import com.isthackathon.takimyildiz.entities.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -97,5 +98,22 @@ public class SharedManager implements SharedService {
 
             return new SuccessResult(SharedMessages.sharedAccepted, HttpStatus.OK);
 
+    }
+
+    @Override
+    public Result checkIfParentOfChild(User parent, User child) {
+        List<Shared> shareds = sharedDao.findAllByPublisherAndPublishedAndShareType(child, parent, ShareType.PARENT);
+
+        if (shareds.isEmpty()){
+            return new ErrorResult(SharedMessages.parentOfChildNotFound, HttpStatus.NOT_FOUND);
+        }
+
+        for(Shared shared : shareds){
+            if (shared.isActive()){
+                return new SuccessResult(SharedMessages.parentOfChildFound, HttpStatus.OK);
+            }
+        }
+
+        return new ErrorResult(SharedMessages.parentOfChildNotFound, HttpStatus.NOT_FOUND);
     }
 }

@@ -126,4 +126,15 @@ public class UserManager implements UserService {
 
         return new SuccessResult(UserMessages.istanbulCardAssigned, HttpStatus.OK);
     }
+
+    @Override
+    public DataResult<User> getUserByCardId(String cardId) {
+        var result = userDao.findByIstanbulCardId(cardId);
+
+        if (!result.isPresent()){
+            return new ErrorDataResult<>(UserMessages.userNotFound, HttpStatus.NOT_FOUND);
+        }
+
+        return new SuccessDataResult<User>(result.get(), UserMessages.userFound, HttpStatus.OK);
+    }
 }

@@ -15,4 +15,6 @@ public class SharedMessages {
     public static String sharedAccepted = "Paylaşım kabul edildi.";
     public static String shareTypeNotValid = "Paylaşım tipi geçerli değil.";
     public static String shareTypeCannotBeNull = "Paylaşım tipi boş olamaz.";
+    public static String parentOfChildNotFound = "Çocuğun ebeveyni bulunamadı.";
+    public static String parentOfChildFound = "Çocuğun ebeveyni bulundu.";
 }

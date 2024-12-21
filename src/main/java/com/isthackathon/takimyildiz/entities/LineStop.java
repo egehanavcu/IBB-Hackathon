@@ -38,4 +38,12 @@ public class LineStop {
     @JsonIgnore
     @OneToMany(mappedBy = "lineStop", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LineStopRelation> lineRelations;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "enterStop")
+    private List<ParentSchedule> enterStopsSchedules;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "leaveStop")
+    private List<ParentSchedule> leaveStopsSchedules;
 }

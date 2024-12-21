@@ -56,6 +56,25 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
 
+                                .requestMatchers(HttpMethod.POST, "/api/users/assignIstanbulCardToAuthenticatedUser").hasAnyRole("USER", "ADMIN")
+
+                                .requestMatchers(HttpMethod.GET, "/api/shareds/getAllSharedsOfAuthenticatedUser").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/shareds/addShared").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/shareds/acceptShared/").hasAnyRole("USER", "ADMIN")
+
+                                .requestMatchers(HttpMethod.GET, "/api/turnstiles/getTurnstilesOfAuthenticatedUser").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/turnstiles/passCard").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/turnstiles/leaveVehicle/**").hasAnyRole("USER", "ADMIN")
+
+                                .requestMatchers(HttpMethod.POST, "/api/schedules/addSchedule").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/schedules/getSchedulesOfAuthenticatedParent").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/schedules/getSchedulesOfAuthenticatdChild").hasAnyRole("USER", "ADMIN")
+
+                                .requestMatchers(HttpMethod.GET, "/api/lines/getAllLines").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/lines/getLineByCode/**").permitAll()
+
+
+
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling(x ->

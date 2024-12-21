@@ -36,4 +36,8 @@ public class Line {
     @JsonIgnore
     @OneToMany(mappedBy = "line")
     private List<Turnstile> turnstiles;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "line")
+    private List<ParentSchedule> parentSchedules;
 }

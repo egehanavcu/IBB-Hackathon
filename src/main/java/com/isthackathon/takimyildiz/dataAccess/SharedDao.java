@@ -1,5 +1,6 @@
 package com.isthackathon.takimyildiz.dataAccess;
 
+import com.isthackathon.takimyildiz.entities.ShareType;
 import com.isthackathon.takimyildiz.entities.Shared;
 import com.isthackathon.takimyildiz.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,6 @@ public interface SharedDao extends JpaRepository<Shared, UUID> {
     List<Shared> findAllByPublisher(User publisher);
 
     List<Shared> findAllByPublished(User published);
+
+    List<Shared> findAllByPublisherAndPublishedAndShareType(User publisher, User published, ShareType shareType);
 }

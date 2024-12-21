@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -34,6 +35,18 @@ public class ParentSchedule {
 
     @Column(name = "day")
     private LocalDate day;
+
+    @ManyToOne
+    @JoinColumn(name = "line_id")
+    private Line line;
+
+    @ManyToOne
+    @JoinColumn(name = "enter_stop_id")
+    private LineStop enterStop;
+
+    @ManyToOne
+    @JoinColumn(name = "leave_stop_id")
+    private LineStop leaveStop;
 
     @Column(name = "start_time")
     private LocalDateTime startTime;

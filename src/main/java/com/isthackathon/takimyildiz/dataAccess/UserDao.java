@@ -10,4 +10,6 @@ import java.util.UUID;
 @Repository
 public interface UserDao extends JpaRepository<User, UUID> {
     Optional<User> findByPhoneNumber(String phoneNumber);
+
+    Optional<User> findByIstanbulCardId(String cardId);
 }
