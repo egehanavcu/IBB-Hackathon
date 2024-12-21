@@ -31,18 +31,18 @@ public class Shared {
     @JoinColumn(name = "published_id")
     private User published;
 
-    @ManyToOne
-    @JoinColumn(name = "turnstile_id")
-    private Turnstile turnstile;
-
     @Column(name = "is_active")
-    private boolean is_active;
+    private boolean isActive;
 
     @Column(name = "share_start_time")
     private LocalDateTime shareStartTime;
 
     @Column(name = "share_end_time")
     private LocalDateTime shareEndTime;
+
+    @Column(name = "share_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private ShareType shareType;
 
 
 }

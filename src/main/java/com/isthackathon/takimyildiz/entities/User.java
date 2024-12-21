@@ -60,14 +60,6 @@ public class User implements UserDetails {
 
     @JsonIgnore
     @OneToMany(mappedBy = "parent")
-    private List<UserRelation> childrenRelations;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "child")
-    private List<UserRelation> parentRelations;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "parent")
     private List<ParentSchedule> parentSchedules;
 
     @JsonIgnore

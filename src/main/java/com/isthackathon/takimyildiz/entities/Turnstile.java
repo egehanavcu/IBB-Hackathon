@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,15 +39,11 @@ public class Turnstile {
     @JoinColumn(name = "start_line_stop_id")
     private LineStop startLineStop;
 
+    @Column(name = "pass_time")
+    private LocalDateTime passTime;
 
     @Column(name = "has_exited")
     private boolean hasExited;
-
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "turnstile")
-    private List<Shared> shareds;
-
 
 
 }
