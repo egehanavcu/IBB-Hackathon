@@ -1,1 +1,1 @@
-Bu backend branchidir.
+Bu frontend branchidir.
