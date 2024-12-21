@@ -1,1 +1,1 @@
-Bu ana branchtir. Frontend ve backende alt branchlerden ulaşabilirsiniz.
+Bu backend branchidir.
