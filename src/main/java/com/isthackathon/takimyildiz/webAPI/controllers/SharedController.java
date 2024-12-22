@@ -2,6 +2,7 @@ package com.isthackathon.takimyildiz.webAPI.controllers;
 
 import com.isthackathon.takimyildiz.business.abstracts.SharedService;
 import com.isthackathon.takimyildiz.core.results.DataResult;
+import com.isthackathon.takimyildiz.core.results.Result;
 import com.isthackathon.takimyildiz.entities.Shared;
 import com.isthackathon.takimyildiz.entities.Turnstile;
 import com.isthackathon.takimyildiz.entities.User;
@@ -9,6 +10,7 @@ import com.isthackathon.takimyildiz.webAPI.dtos.shareds.SharedAddDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,30 +26,51 @@ public class SharedController {
 
 
     @GetMapping("/getAllSharedsOfAuthenticatedUser")
-    public ResponseEntity<DataResult<List<Shared>>> getAllSharedsOfAuthenticatedUser(){
-        var result = sharedService.getAllSharedsOfAuthenticatedUser();
+    public ResponseEntity<DataResult<List<Shared>>> getAllPublisherSharedsOfAuthenticatedUser(){
+        var result = sharedService.getAllPublisherSharedsOfAuthenticatedUser();
+
+        return ResponseEntity.status(result.getHttpStatus()).body(result);
+    }
+
+    @GetMapping("/getAllPublishedSharedsOfAuthenticatedUser")
+    public ResponseEntity<DataResult<List<Shared>>> getAllPublishedSharedsOfAuthenticatedUser(){
+        var result = sharedService.getAllPublishedSharedsOfAuthenticatedUser();
+
+        return ResponseEntity.status(result.getHttpStatus()).body(result);
+    }
+
+    @GetMapping("/getAllPublishedAndPublisherSharedsOfAuthenticatedUser")
+    public ResponseEntity<DataResult<List<Shared>>> getAllPublishedAndPublisherSharedsOfAuthenticatedUser(){
+        var result = sharedService.getAllPublishedAndPublisherSharedsOfAuthenticatedUser();
 
         return ResponseEntity.status(result.getHttpStatus()).body(result);
     }
 
     @PostMapping("/addShared")
-    public ResponseEntity<?> addShared(@RequestBody SharedAddDto sharedAddDto){
-        User publishedUser = User.builder()
-                .id(sharedAddDto.getPublishedId())
-                .build();
+    public ResponseEntity<?> addShared(@RequestBody SharedAddDto sharedAddDto) {
 
+        List<String> phoneNumbers = sharedAddDto.getPhoneNumbers();
 
-        Shared shared = Shared.builder()
-                .published(publishedUser)
-                .shareStartTime(sharedAddDto.getShareStartTime())
-                .shareEndTime(sharedAddDto.getShareEndTime())
-                .shareType(sharedAddDto.getShareType())
-                .build();
+        List<Result> results = new ArrayList<>();
 
-        var result = sharedService.addShared(shared);
+        for (String phoneNumber : phoneNumbers) {
+            User publishedUser = User.builder()
+                    .phoneNumber(phoneNumber)
+                    .build();
 
-        return ResponseEntity.status(result.getHttpStatus()).body(result);
+            Shared shared = Shared.builder()
+                    .published(publishedUser)
+                    .shareEndTime(sharedAddDto.getShareEndTime())
+                    .shareType(sharedAddDto.getShareType())
+                    .build();
+
+            var result = sharedService.addShared(shared);
+            results.add(result);
+        }
+
+        return ResponseEntity.ok(results);
     }
+
 
     @PostMapping("/acceptShared/{sharedId}")
     public ResponseEntity<?> acceptShared(@PathVariable UUID sharedId){

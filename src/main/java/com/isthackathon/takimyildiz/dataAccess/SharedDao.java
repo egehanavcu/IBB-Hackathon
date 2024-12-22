@@ -17,4 +17,6 @@ public interface SharedDao extends JpaRepository<Shared, UUID> {
     List<Shared> findAllByPublished(User published);
 
     List<Shared> findAllByPublisherAndPublishedAndShareType(User publisher, User published, ShareType shareType);
+
+    List<Shared> findAllByPublisherOrPublished(User user1, User user2);
 }

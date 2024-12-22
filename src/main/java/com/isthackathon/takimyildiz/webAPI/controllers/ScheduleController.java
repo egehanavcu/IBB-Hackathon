@@ -44,7 +44,7 @@ public class ScheduleController {
 
         ParentSchedule parentSchedule = ParentSchedule.builder()
                 .child(child)
-                .day(addScheduleDto.getDay())
+                .days(addScheduleDto.getDays())
                 .startTime(addScheduleDto.getStartTime())
                 .endTime(addScheduleDto.getEndTime())
                 .enterStop(enterStop)

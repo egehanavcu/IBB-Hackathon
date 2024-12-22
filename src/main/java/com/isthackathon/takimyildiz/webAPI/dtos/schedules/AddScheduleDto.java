@@ -1,5 +1,6 @@
 package com.isthackathon.takimyildiz.webAPI.dtos.schedules;
 
+import com.isthackathon.takimyildiz.entities.Days;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +8,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -17,11 +21,11 @@ public class AddScheduleDto {
 
     private UUID childId;
 
-    private LocalDate day;
+    private Set<Days> days;
 
-    private LocalDateTime startTime;
+    private LocalTime startTime;
 
-    private LocalDateTime endTime;
+    private LocalTime endTime;
 
     private UUID enterStopId;
 

@@ -6,6 +6,7 @@ import com.isthackathon.takimyildiz.core.results.DataResult;
 import com.isthackathon.takimyildiz.core.results.ErrorDataResult;
 import com.isthackathon.takimyildiz.core.results.SuccessDataResult;
 import com.isthackathon.takimyildiz.dataAccess.LineDao;
+import com.isthackathon.takimyildiz.dataAccess.LineStopRelationDao;
 import com.isthackathon.takimyildiz.entities.Line;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,8 @@ public class LineManager implements LineService {
 
     private final LineDao lineDao;
 
-    public LineManager(LineDao lineDao) {
+
+    public LineManager(LineDao lineDao, LineStopRelationDao lineStopRelationDao) {
         this.lineDao = lineDao;
     }
 

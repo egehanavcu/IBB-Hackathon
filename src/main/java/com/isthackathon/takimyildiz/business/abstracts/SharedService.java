@@ -12,7 +12,11 @@ public interface SharedService {
 
     Result addShared(Shared shared);
 
-    DataResult<List<Shared>> getAllSharedsOfAuthenticatedUser();
+    DataResult<List<Shared>> getAllPublisherSharedsOfAuthenticatedUser();
+
+    DataResult<List<Shared>> getAllPublishedSharedsOfAuthenticatedUser();
+
+    DataResult<List<Shared>> getAllPublishedAndPublisherSharedsOfAuthenticatedUser();
 
     Result acceptShared(UUID sharedId);
 

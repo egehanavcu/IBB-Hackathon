@@ -28,6 +28,8 @@ public class JwtService {
 
         claims.put("firstName", user.getFirstName());
         claims.put("lastName", user.getLastName());
+        claims.put("phoneNumber", user.getPhoneNumber());
+        claims.put("istanbulcardId", user.getIstanbulCardId());
         claims.put("authorities", user.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList()));

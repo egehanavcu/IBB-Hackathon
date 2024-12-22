@@ -61,9 +61,10 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/shareds/getAllSharedsOfAuthenticatedUser").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/api/shareds/addShared").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/api/shareds/acceptShared/").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/shareds/getAllPublishedSharedsOfAuthenticatedUser").hasAnyRole("USER", "ADMIN")
 
                                 .requestMatchers(HttpMethod.GET, "/api/turnstiles/getTurnstilesOfAuthenticatedUser").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers(HttpMethod.POST, "/api/turnstiles/passCard").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/turnstiles/passCard").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/turnstiles/leaveVehicle/**").hasAnyRole("USER", "ADMIN")
 
                                 .requestMatchers(HttpMethod.POST, "/api/schedules/addSchedule").hasAnyRole("USER", "ADMIN")
@@ -75,7 +76,7 @@ public class SecurityConfig {
 
 
 
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 .exceptionHandling(x ->
                         x

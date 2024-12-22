@@ -5,6 +5,7 @@ import com.isthackathon.takimyildiz.core.results.Result;
 import com.isthackathon.takimyildiz.entities.Turnstile;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface TurnstileService {
 
@@ -15,4 +16,7 @@ public interface TurnstileService {
 
     Result leaveVehicle(String vehicleCode);
 
+    DataResult<List<Turnstile>> getTurnstilesByUserId(UUID id);
+
+    DataResult<List<Turnstile>> getSharedTurnstiles(UUID publisherId);
 }

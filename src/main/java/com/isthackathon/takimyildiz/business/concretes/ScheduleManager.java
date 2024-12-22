@@ -34,7 +34,7 @@ public class ScheduleManager implements ScheduleService {
 
     @Override
     public Result addSchedule(ParentSchedule parentSchedule) {
-        if (parentSchedule.getDay() == null){
+        if (parentSchedule.getDays() == null){
             return new ErrorResult(ScheduleMessages.dayCannotBeNull, HttpStatus.OK);
         }
 

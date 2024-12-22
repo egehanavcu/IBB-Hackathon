@@ -1,5 +1,6 @@
 package com.isthackathon.takimyildiz.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,6 +44,7 @@ public class Shared {
     @Column(name = "share_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private ShareType shareType;
+
 
 
 }

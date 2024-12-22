@@ -6,10 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -33,9 +36,6 @@ public class ParentSchedule {
     @JoinColumn(name = "child_id")
     private User child;
 
-    @Column(name = "day")
-    private LocalDate day;
-
     @ManyToOne
     @JoinColumn(name = "line_id")
     private Line line;
@@ -49,10 +49,18 @@ public class ParentSchedule {
     private LineStop leaveStop;
 
     @Column(name = "start_time")
-    private LocalDateTime startTime;
+    private LocalTime startTime;
 
     @Column(name = "end_time")
-    private LocalDateTime endTime;
+    private LocalTime endTime;
+
+
+
+    @ElementCollection(targetClass = Days.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "days_for_schedule", joinColumns = @JoinColumn(name = "parent_schedule_id"))
+    @Column(name = "day", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Set<Days> days;
 
 
 }

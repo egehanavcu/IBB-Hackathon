@@ -43,6 +43,12 @@ public class SharedManager implements SharedService {
             return new ErrorResult(SharedMessages.shareTypeNotValid, HttpStatus.BAD_REQUEST);
         }
 
+        var publishedUserResult = userService.getUserByPhoneNumber(shared.getPublished().getPhoneNumber());
+        if (!publishedUserResult.isSuccess()){
+            return new ErrorResult(publishedUserResult.getMessage(), HttpStatus.NOT_FOUND);
+        }
+
+        shared.setPublished(publishedUserResult.getData());
         shared.setPublisher(authenticatedUser.getData());
         shared.setActive(false);
         shared.setShareStartTime(LocalDateTime.now());
@@ -53,13 +59,43 @@ public class SharedManager implements SharedService {
     }
 
     @Override
-    public DataResult<List<Shared>> getAllSharedsOfAuthenticatedUser() {
+    public DataResult<List<Shared>> getAllPublisherSharedsOfAuthenticatedUser() {
         var authenticatedUser = userService.getAuthenticatedUser();
         if (!authenticatedUser.isSuccess()){
             return new ErrorDataResult<>(authenticatedUser.getMessage(), HttpStatus.UNAUTHORIZED);
         }
 
         var shareds = sharedDao.findAllByPublisher(authenticatedUser.getData());
+        if (shareds.isEmpty()){
+            return new ErrorDataResult<>(SharedMessages.sharedNotFound, HttpStatus.NOT_FOUND);
+        }
+
+        return new SuccessDataResult<>(shareds, SharedMessages.sharedListed, HttpStatus.OK);
+    }
+
+    @Override
+    public DataResult<List<Shared>> getAllPublishedSharedsOfAuthenticatedUser() {
+        var authenticatedUser = userService.getAuthenticatedUser();
+        if (!authenticatedUser.isSuccess()){
+            return new ErrorDataResult<>(authenticatedUser.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
+
+        var shareds = sharedDao.findAllByPublished(authenticatedUser.getData());
+        if (shareds.isEmpty()){
+            return new ErrorDataResult<>(SharedMessages.sharedNotFound, HttpStatus.NOT_FOUND);
+        }
+
+        return new SuccessDataResult<>(shareds, SharedMessages.sharedListed, HttpStatus.OK);
+    }
+
+    @Override
+    public DataResult<List<Shared>> getAllPublishedAndPublisherSharedsOfAuthenticatedUser() {
+        var authenticatedUser = userService.getAuthenticatedUser();
+        if (!authenticatedUser.isSuccess()){
+            return new ErrorDataResult<>(authenticatedUser.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
+
+        var shareds = sharedDao.findAllByPublisherOrPublished(authenticatedUser.getData(), authenticatedUser.getData());
         if (shareds.isEmpty()){
             return new ErrorDataResult<>(SharedMessages.sharedNotFound, HttpStatus.NOT_FOUND);
         }
